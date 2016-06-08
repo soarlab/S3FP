@@ -1,0 +1,16 @@
+RT = URT
+N_VARS = 512
+TIMEOUT = 5000
+RESOURCE = SVE
+RSEED = 200
+REL_DELTA = 0.001
+ERR_FUNC = REL
+ERR_OPT = LAST
+INPUT_FILE = random_input
+EXE_LP = balanced_reduction_32
+OUTPUT_LP = output_lp
+EXE_HP = balanced_reduction_128
+OUTPUT_HP = output_hp
+UNIFORM_INPUT = true
+UNIFORM_INPUTLB = -100.0
+UNIFORM_INPUTUB = 100.0
