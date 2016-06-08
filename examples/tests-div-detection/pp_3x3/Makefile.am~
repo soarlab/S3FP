@@ -1,5 +1,0 @@
-
-# binary targets 
-bin_PROGRAMS = pp_3x3_32
-
-# 
