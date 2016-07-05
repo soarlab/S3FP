@@ -27,7 +27,8 @@ examples/tests-div-detection/inc_convex_hull/Makefile
 examples/tests-div-detection/cpu-scan-naive-opt-last/Makefile 
 examples/tests-div-detection/cpu-scan-naive-opt-sum/Makefile 
 examples/tests-div-detection/cpu-scan-harris-opt-last/Makefile 
-examples/tests-div-detection/cpu-scan-harris-opt-sum/Makefile) 
+examples/tests-div-detection/cpu-scan-harris-opt-sum/Makefile
+tools/Makefile) 
 
 
 # AC_CONFIG_SRCDIR([scripts/utils/show_input_to_errors.cpp])
