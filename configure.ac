@@ -1,7 +1,7 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_PREREQ([2.68])
+AC_PREREQ([2.63])
 AC_INIT(s3fp, 0.1, wfchiang@cs.utah.edu)
 AM_INIT_AUTOMAKE(s3fp, 0.1) 
 AC_OUTPUT(

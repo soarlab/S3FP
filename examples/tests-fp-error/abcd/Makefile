@@ -7,8 +7,8 @@ all: compile
 
 
 N_VARS = 4 
-TIMEOUT = 100000
-RESOURCE = SVE # or TIME
+TIMEOUT = 21600
+RESOURCE = TIME # or TIME
 RSEED = 0
 ERR_FUNC = ABS
 REL_DELTA = 0.001
@@ -52,22 +52,22 @@ create-base-conf:
 	@echo OUTPUT_LP = $(OUTPUT_LP) >> s3fp_setting 
 	@echo OUTPUT_HP = $(OUTPUT_HP) >> s3fp_setting 
 
-test-urt: create-base-conf 
+test-urt: create-base-conf compile  
 	@echo RT = URT >> s3fp_setting 
 	@echo "==== run s3fp ===="
 	@$(S3FP_DIR)/s3fp 
 
-test-bgrt: create-base-conf 
+test-bgrt: create-base-conf compile 
 	@echo RT = BGRT >> s3fp_setting 
 	@echo "==== run s3fp ===="
 	@$(S3FP_DIR)/s3fp 
 
-test-ils: create-base-conf 
+test-ils: create-base-conf compile 
 	@echo RT = ILS >> s3fp_setting 
 	@echo "==== run s3fp ===="
 	@$(S3FP_DIR)/s3fp 
 
-test-pso: create-base-conf 
+test-pso: create-base-conf compile 
 	@echo RT = PSO >> s3fp_setting 
 	@echo "==== run s3fp ===="
 	@$(S3FP_DIR)/s3fp 
