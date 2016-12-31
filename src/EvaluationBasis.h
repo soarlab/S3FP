@@ -166,7 +166,7 @@ class EvaluationBasis {
     outputs.clear();
 
     rmFile(outname);
-    exe_para << exename << " " << inname << " " << outname; 
+    exe_para << "./" << exename << " " << inname << " " << outname; 
 
     stringstream run;
     run << exe_para.str() << " 2>&1 > __outdump"; 
