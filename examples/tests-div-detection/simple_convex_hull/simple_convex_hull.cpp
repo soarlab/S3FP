@@ -36,7 +36,11 @@ struct Point {
 typedef pair<Point, Point> Edge; 
 
 vector<Point> PointList; 
-vector<Edge> CHullEdges; 
+vector<Edge> CHullEdges;
+
+size_t getEdgeCount() {
+  return CHullEdges.size();
+}
 
 // vector<Point> Convexhull; 
 // vector<Point> Insiders; 
@@ -115,11 +119,11 @@ void Canonical_Unordered_Points  (vector<Point>& pv, int cano_selection) {
   vector<Point> temp_pv; 
   int *new_inds = (int*) malloc(sizeof(int) * pv.size()); 
 
-  for (int i = 0 ; i < pv.size() ; i++) 
+  for (size_t i = 0 ; i < pv.size() ; i++) 
     new_inds[i] = i; 
 
-  for (int i = 0 ; i < pv.size() ; i++) {
-    for (int j = 0 ; j < (pv.size() - 1) ; j++) {
+  for (size_t i = 0 ; i < pv.size() ; i++) {
+    for (size_t j = 0 ; j < (pv.size() - 1) ; j++) {
       int this_ind = new_inds[j]; 
       int next_ind = new_inds[j+1]; 
       assert(pv[this_ind].id != pv[next_ind].id); 
@@ -146,7 +150,7 @@ void Canonical_Unordered_Points  (vector<Point>& pv, int cano_selection) {
     }
   }
 
-  for (int i = 0 ; i < pv.size() ; i++) 
+  for (size_t i = 0 ; i < pv.size() ; i++) 
     temp_pv.push_back(pv[new_inds[i]]); 
   pv.clear();
   pv.insert(pv.begin(), temp_pv.begin(), temp_pv.end()); 
@@ -190,9 +194,9 @@ void Canonical_Ordered_Points (vector<Point>& pv, int cano_selection) {
       if (pv[nh_index].y < pv[i].y) nh_index = i; 
       else if (pv[nh_index].y == pv[i].y) {
 	if (pv[nh_index].x > pv[i].x) nh_index = i; 
-	else ; 
+	else {;} 
       }
-      else ; 
+      else {;}
     }
     else assert(false); 
   }
@@ -310,21 +314,23 @@ void ReadInputs (FILE *infile) {
 /*
   Simple Convex Hull 
  */
-void SimpleComputeConvexhull (FILE *outfile) {
+template <typename T = WFT>
+void 
+SimpleComputeConvexhull () { // (FILE *outfile) {
 
-  assert(outfile != NULL); 
+  //  assert(outfile != NULL); 
 
   vector<Edge> chedges; 
 
-  for (int p = 0 ; p < PointList.size() ; p++) {
-    for (int q = 0 ; q < PointList.size() ; q++) {
+  for (size_t p = 0 ; p < PointList.size() ; p++) {
+    for (size_t q = 0 ; q < PointList.size() ; q++) {
       if (PointList[p].id == PointList[q].id) continue; 
-      int r; 
+      size_t r; 
       for (r = 0 ; r < PointList.size() ; r++) {
 	if (PointList[p].id == PointList[r].id || 
 	    PointList[q].id == PointList[r].id) continue; 
-	WFT det; 
-	int ret = Orientation<WFT> (PointList[p], 
+	T det; 
+	int ret = Orientation<T> (PointList[p], 
 				    PointList[q], 
 				    PointList[r], 
 				    det); 
@@ -360,7 +366,7 @@ void SimpleComputeConvexhull (FILE *outfile) {
   while (true) {
     Edge last_edge = CHullEdges[CHullEdges.size()-1]; 
     if (last_edge.second.id == first_edge.first.id) break; 
-    int e; 
+    size_t e; 
     for (e = 0 ; e < chedges.size() ; e++) {
       if (last_edge.second.id == chedges[e].first.id) {
 	CHullEdges.push_back(chedges[e]); 
@@ -394,7 +400,7 @@ void GiftWrappingComputeConvexhull (FILE *outfile) {
   // Find the right most point 
   assert(PointList.size() >= 3); 
   struct Point rm_point = PointList[0]; 
-  for (int p = 1 ; p < PointList.size() ; p++) {
+  for (size_t p = 1 ; p < PointList.size() ; p++) {
     if (rm_point.x < PointList[p].x) 
       rm_point = PointList[p]; 
   }
@@ -404,7 +410,7 @@ void GiftWrappingComputeConvexhull (FILE *outfile) {
   struct Point next_point; 
   while (true) {
     // find the initial candidate 
-    for (int p = 0 ; p < PointList.size() ; p++) {
+    for (size_t p = 0 ; p < PointList.size() ; p++) {
       if (this_point.id != PointList[p].id) {
 	next_point = PointList[p]; 
 	break;
@@ -412,7 +418,7 @@ void GiftWrappingComputeConvexhull (FILE *outfile) {
     }
     
     // iterate through all points 
-    for (int p = 0 ; p < PointList.size() ; p++) {
+    for (size_t p = 0 ; p < PointList.size() ; p++) {
       assert(this_point.id != next_point.id); 
       if (this_point.id == PointList[p].id || 
 	  next_point.id == PointList[p].id) continue; 
@@ -490,7 +496,7 @@ void VerifyHull(FILE *outfile) {
 				    CHullEdges[0].second, 
 				    CHullEdges[1].second, 
 				    ret_det); 
-    int i; 
+    size_t i; 
     for (i = 1 ; i < (CHullEdges.size()-1) ; i++) {
       if (VERIFY_METHOD == 1 && 
 	  CHullEdges[i].second.id != CHullEdges[i+1].first.id) {
@@ -528,7 +534,7 @@ void VerifyHull(FILE *outfile) {
  */
 OFT CheckConsistency () {
   cout << "Decision size: " << Decisions.size() << endl;
-  for (int i = 0 ; i < Decisions.size() ; i++) {
+  for (size_t i = 0 ; i < Decisions.size() ; i++) {
     PrimitiveCall LTxyz;  
     if ( Decisions[i].result ) {
       LTxyz.idp = Decisions[i].idp;
@@ -542,7 +548,7 @@ OFT CheckConsistency () {
     }
     LTxyz.result = true; 
     
-    for (int j = 0 ; j < Decisions.size() ; j++) {
+    for (size_t j = 0 ; j < Decisions.size() ; j++) {
       // cyclic symmetry 
       if (LTxyz.idp == Decisions[j].idp && 
 	  LTxyz.idq == Decisions[j].idq && 
@@ -638,6 +644,7 @@ OFT CheckConsistency () {
   return 1; 
 }
 
+#ifndef SCH_LIB
 
 int main (int argc, char *argv[]) {
   assert(argc == 7);
@@ -663,7 +670,7 @@ int main (int argc, char *argv[]) {
 
   switch (CHMETHOD) {
   case 0: 
-    SimpleComputeConvexhull(outfile); 
+    SimpleComputeConvexhull(); //outfile); 
     break;
   case 1:
     GiftWrappingComputeConvexhull(outfile); 
@@ -695,3 +702,5 @@ int main (int argc, char *argv[]) {
   
   return 0; 
 }
+
+#endif // #ifndef SCH_LIB
