@@ -682,7 +682,8 @@ int main (int argc, char *argv[]) {
       fwrite(&odata, sizeof(OFT), 1, outfile); 
       fwrite(&odata, sizeof(OFT), 1, outfile); 
 
-      fwrite(&odata, sizeof(OFT), 1, outfile); 
+      fwrite(&odata, sizeof(OFT), 1, outfile);
+      //printf("hull edge count: %u\n", CHullEdges.size());
       odata = CHullEdges.size(); 
       fwrite(&odata, sizeof(OFT), 1, outfile); 
     }
