@@ -5,7 +5,7 @@
 #include <string> 
 #include <vector>
 extern "C" {
-#include "quadmath.h"
+#include <quadmath.h>
 }
 #include "s3fp_utils.h"
 
